@@ -202,4 +202,25 @@ public abstract class AbstractChannelService implements ChannelService {
         fileProgress.setPodType(channelDefine.getPodType());
         fileProgress.setCtTime(ct);
     }
+
+    public Boolean shouldCollectLogs(List<String> logLevelList, String line, Integer prefixLength){
+        if (logLevelList == null || logLevelList.isEmpty()) {
+            return true;
+        }
+        if (line == null || line.isEmpty()) {
+            return false;
+        }
+        if (line.length() > prefixLength){
+            line = line.substring(0, prefixLength);
+        }
+        String lineLowerCase = line.toLowerCase();
+        for (String level : logLevelList) {
+            if (lineLowerCase.contains(level.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
